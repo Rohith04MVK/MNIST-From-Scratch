@@ -1,7 +1,6 @@
 import numpy as np
 
-class FullyConnectedLayer:
-    
+class NN:
     def __init__(self, shape, neuron, layers):
         self.shape = shape
         self.neuron = neuron
@@ -23,3 +22,8 @@ class FullyConnectedLayer:
                 layer_output_size, 1) * 0.1
             
         return params_values
+
+    def ReLU(Z):
+    return np.maximum(Z, 0)
+
+
