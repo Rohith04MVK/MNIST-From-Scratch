@@ -5,4 +5,3 @@ class NN:
         self.shape = shape
         self.neuron = neuron
         self.layers = layers
-
