@@ -1,6 +1,6 @@
 import numpy as np
 
-class NN:
+class FullyConnectedLayer:
     
     def __init__(self, shape, neuron, layers):
         self.shape = shape
