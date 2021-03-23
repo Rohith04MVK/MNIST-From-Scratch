@@ -23,6 +23,7 @@ class NN:
             
         return params_values
 
+
     def ReLU(Z):
     return np.maximum(Z, 0)
 
