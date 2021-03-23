@@ -22,4 +22,3 @@ class NN:
                 layer_output_size, 1) * 0.1
             
         return params_values
-
