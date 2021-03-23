@@ -31,4 +31,3 @@ class NN:
         A = np.exp(Z) / sum(np.exp(Z))
         return A
 
-
