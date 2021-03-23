@@ -23,6 +23,12 @@ class NN:
             
         return params_values
 
-
-    def Relu(Z):
+    def ReLU(Z):
     return np.maximum(Z, 0)
+
+
+    def softmax(Z):
+        A = np.exp(Z) / sum(np.exp(Z))
+        return A
+
+
