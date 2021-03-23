@@ -26,4 +26,3 @@ class NN:
     def ReLU(Z):
     return np.maximum(Z, 0)
 
-
