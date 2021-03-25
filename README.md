@@ -5,6 +5,8 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 
 ![image](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/320px-MnistExamples.png)
 
+#### The MNIST database 
+
 # The logic and concepts of working:
 
 ### Neural networks
