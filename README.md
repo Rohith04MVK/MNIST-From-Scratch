@@ -27,6 +27,8 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 
 #### For a neural network to learn, there has to be an element of feedback involved—just as children learn by being told what they're doing right or wrong. In fact, we all use feedback, all the time. Think back to when you first learned to play a game like Rock Paper Scissors. As you played for the first time, your brain watched how the opponent was making moves and tried to recognize a pattern in it. Next time it was your turn, you remembered what you'd done wrong before, modified your moves accordingly, and hopefully played a bit better.So you used feedback to compare the outcome you wanted with what actually happened, figured out the difference between the two, and used that to change what you did next time ("He shows paper a rock" "he shows scissors rearly" and so on). The bigger the difference between the intended and actual outcome, the more radically you would have altered your moves.
 
+#### Neural networks learn things in exactly the same way, typically by a feedback process called backpropagation.
+
 ### A little maths about neural networks.
 
 ![image](https://miro.medium.com/max/1400/1*6Kn68RFH0QMQ7gPSpulh0A.png)
