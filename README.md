@@ -16,3 +16,5 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 ### What does a neural network consist of?
 
 ![image](https://databricks.com/wp-content/uploads/2019/02/neural1.jpg)
+
+#### A typical neural network has anything from a few dozen to hundreds, thousands, or even millions of artificial neurons called units arranged in a series of layers, each of which connects to the layers on either side.
