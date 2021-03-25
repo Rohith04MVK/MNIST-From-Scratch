@@ -35,3 +35,5 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 <p align="center"><img src="https://ailephant.com/wp-content/uploads/2018/08/ReLU-function-graph-300x234.png"><p>
 
 #### Sigmoid - The softmax function is used as the activation function in the output layer of neural network models that predict a multinomial probability distribution. That is, softmax is used as the activation function for multi-class classification problems where class membership is required on more than two class labels.
+
+<p align="center"><img src="https://th.bing.com/th/id/R1cc898b08e1abb1fc9d3494b19a28595?rik=lxbci3%2bOLVTF4g&riu=http%3a%2f%2f1.bp.blogspot.com%2f_Tndn7IbKcao%2fSyu0vkRlGtI%2fAAAAAAAAAIk%2fTQ-K2fOr9w0%2fs400%2fSigmoidPlot1.png&ehk=%2b3e3aUWb19M3iolTWTGaLwOeAQCrIOa97BLTuavF%2bwg%3d&risl=&pid=ImgRaw"><p>
