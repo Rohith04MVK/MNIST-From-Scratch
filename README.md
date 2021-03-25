@@ -23,6 +23,7 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 
 ### How a neural network learns?
 
+#### Information flows through a neural network in two ways. When it's learning (being trained) or operating normally (after being trained), patterns of information are fed into the network via the input units, which trigger the layers of hidden units, and these in turn arrive at the output units.
 
 ### A little maths about neural networks.
 
