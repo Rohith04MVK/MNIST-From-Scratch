@@ -22,3 +22,5 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 ### A little maths about neural networks
 
 ![image](https://miro.medium.com/max/1400/1*6Kn68RFH0QMQ7gPSpulh0A.png)
+
+#### For each input, multiply the input value xᵢ with weights wᵢ and sum all the multiplied values. Weights — represent the strength of the connection between neurons and decides how much influence the given input will have on the neuron’s output. If the weight w₁ has a higher value than the weight w₂, then the input x₁ will have a higher influence on the output than w₂.
