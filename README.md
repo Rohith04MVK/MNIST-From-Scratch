@@ -9,4 +9,4 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 
 ### What does a neural network consist of?
 
-![image](https://cdn4.explainthatstuff.com/neural-network-structure.png)
+![image](https://databricks.com/wp-content/uploads/2019/02/neural1.jpg)
