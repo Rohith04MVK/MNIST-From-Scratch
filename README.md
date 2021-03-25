@@ -5,7 +5,7 @@ Classifying the MNIST handwritten digit dataset using only numpy.
 
 ![image](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/320px-MnistExamples.png)
 
-#### The MNIST database 
+#### The MNIST database is a large database of handwritten digits that is commonly used for training various image processing systems. The database is also widely used for training and testing in the field of machine learning. This is also called the "Hello World" of machine learning. 
 
 # The logic and concepts of working:
 
