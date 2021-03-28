@@ -22,19 +22,21 @@ class NN:
             # extracting the number of units in layers
             layer_input_size = layer["input_dim"]
             layer_output_size = layer["output_dim"]
-            
-            # initiating the values of the W matrix
-            # and vector b for subsequent layers
-            params_values['W' + str(layer_idx)] = np.random.randn(
-                layer_output_size, layer_input_size) * 0.1
-            params_values['b' + str(layer_idx)] = np.random.randn(
-                layer_output_size, 1) * 0.1
-        
-    return params_values
+
             
     def sigmoid(Z):
         return 1/(1+np.exp(-Z))
 
     def relu(Z):
         return np.maximum(0,Z)
+
+    def sigmoid_backward(dA, Z):
+        sig = sigmoid(Z)
+        return dA * sig * (1 - sig)
+
+    def relu_backward(dA, Z):
+        dZ = np.array(dA, copy = True)
+        dZ[Z <= 0] = 0
+        return dZ
+
 
