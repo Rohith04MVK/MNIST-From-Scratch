@@ -1,12 +1,11 @@
 import numpy as np
 
 class NN:
-    def __init__(self, shape, neuron, layers):
-        self.shape = shape
-        self.neuron = neuron
-        self.layers = layers
 
-    def init_layers(nn_architecture, seed = 99):
+    def __init__(self):
+        pass
+
+    def init_layers(self, nn_architecture, seed = 99):
         # random seed initiation
         np.random.seed(seed)
         # number of layers in our neural network
@@ -31,40 +30,38 @@ class NN:
                 layer_output_size, 1) * 0.1
         
         return params_values
-            
-    def sigmoid(Z):
+    
+    def sigmoid(self, Z):
         return 1/(1+np.exp(-Z))
 
-    def relu(Z):
+    def relu(self, Z):
         return np.maximum(0,Z)
 
-    def sigmoid_backward(dA, Z):
-        sig = sigmoid(Z)
+    def sigmoid_backward(self, dA, Z):
+        sig = self.sigmoid(Z)
         return dA * sig * (1 - sig)
 
-    def relu_backward(dA, Z):
+    def relu_backward(self, dA, Z):
         dZ = np.array(dA, copy = True)
         dZ[Z <= 0] = 0
         return dZ
 
- 
-    def single_layer_forward_propagation(A_prev, W_curr, b_curr, activation="relu"):
+    def single_layer_forward_propagation(self, A_prev, W_curr, b_curr, activation="relu"):
         # calculation of the input value for the activation function
         Z_curr = np.dot(W_curr, A_prev) + b_curr
         
         # selection of activation function
         if activation is "relu":
-            activation_func = relu
+            activation_func = self.relu
         elif activation is "sigmoid":
-            activation_func = sigmoid
+            activation_func = self.sigmoid
         else:
             raise Exception('Non-supported activation function')
             
         # return of calculated activation A and the intermediate Z matrix
         return activation_func(Z_curr), Z_curr
 
-    
-    def full_forward_propagation(X, params_values, nn_architecture):
+    def full_forward_propagation(self, X, params_values, nn_architecture):
         # creating a temporary memory to store the information needed for a backward step
         memory = {}
         # X vector is the activation for layer 0 
@@ -84,7 +81,7 @@ class NN:
             # extraction of b for the current layer
             b_curr = params_values["b" + str(layer_idx)]
             # calculation of activation for the current layer
-            A_curr, Z_curr = single_layer_forward_propagation(A_prev, W_curr, b_curr, activ_function_curr)
+            A_curr, Z_curr = self.single_layer_forward_propagation(A_prev, W_curr, b_curr, activ_function_curr)
             
             # saving calculated values in the memory
             memory["A" + str(idx)] = A_prev
@@ -93,36 +90,32 @@ class NN:
     # return of prediction vector and a dictionary containing intermediate values
         return A_curr, memory
 
-    def get_cost_value(Y_hat, Y):
+    def get_cost_value(self, Y_hat, Y):
     # number of examples
         m = Y_hat.shape[1]
         # calculation of the cost according to the formula
         cost = -1 / m * (np.dot(Y, np.log(Y_hat).T) + np.dot(1 - Y, np.log(1 - Y_hat).T))
         return np.squeeze(cost)
 
-
-    def convert_prob_into_class(probs):
+    def convert_prob_into_class(self, probs):
         probs_ = np.copy(probs)
         probs_[probs_ > 0.5] = 1
         probs_[probs_ <= 0.5] = 0
         return probs_
 
-    
-    def get_accuracy_value(Y_hat, Y):
-        Y_hat_ = convert_prob_into_class(Y_hat)
-        return (Y_hat_ == Y).all(axis=0).mean()
+    def get_accuracy_value(self, predictions, Y):
+        return np.sum(predictions == Y) / Y.size
 
     
-    
-    def single_layer_backward_propagation(dA_curr, W_curr, b_curr, Z_curr, A_prev, activation="relu"):
+    def single_layer_backward_propagation(self, dA_curr, W_curr, b_curr, Z_curr, A_prev, activation="relu"):
         # number of examples
         m = A_prev.shape[1]
         
         # selection of activation function
         if activation is "relu":
-            backward_activation_func = relu_backward
+            backward_activation_func = self.relu_backward
         elif activation is "sigmoid":
-            backward_activation_func = sigmoid_backward
+            backward_activation_func = self.sigmoid_backward
         else:
             raise Exception('Non-supported activation function')
         
@@ -138,11 +131,11 @@ class NN:
 
         return dA_prev, dW_curr, db_curr
 
-    def full_backward_propagation(Y_hat, Y, memory, params_values, nn_architecture):
+    def full_backward_propagation(self, Y_hat, Y, memory, params_values, nn_architecture):
         grads_values = {}
         
         # number of examples
-        m = Y.shape[1]
+        m = Y.shape[0]
         # a hack ensuring the same shape of the prediction vector and labels vector
         Y = Y.reshape(Y_hat.shape)
         
@@ -163,7 +156,7 @@ class NN:
             W_curr = params_values["W" + str(layer_idx_curr)]
             b_curr = params_values["b" + str(layer_idx_curr)]
             
-            dA_prev, dW_curr, db_curr = single_layer_backward_propagation(
+            dA_prev, dW_curr, db_curr = self.single_layer_backward_propagation(
                 dA_curr, W_curr, b_curr, Z_curr, A_prev, activ_function_curr)
             
             grads_values["dW" + str(layer_idx_curr)] = dW_curr
@@ -171,7 +164,7 @@ class NN:
         
         return grads_values
 
-    def update(params_values, grads_values, nn_architecture, learning_rate):
+    def update(self, params_values, grads_values, nn_architecture, learning_rate):
         # iteration over network layers
         for layer_idx, layer in enumerate(nn_architecture, 1):
             params_values["W" + str(layer_idx)] -= learning_rate * grads_values["dW" + str(layer_idx)]        
@@ -179,33 +172,35 @@ class NN:
 
         return params_values
     
-    def train(X, Y, nn_architecture, epochs, learning_rate, verbose=False, callback=None):
+
+    def train(self, X, Y, nn_architecture, epochs, learning_rate, verbose=False, callback=None):
         # initiation of neural net parameters
-        params_values = init_layers(nn_architecture, 2)
+        params_values = self.init_layers(nn_architecture, 2)
         # initiation of lists storing the history 
         # of metrics calculated during the learning process 
+        global cost_history
         cost_history = []
         accuracy_history = []
         
         # performing calculations for subsequent iterations
         for i in range(epochs):
             # step forward
-            Y_hat, cashe = full_forward_propagation(X, params_values, nn_architecture)
+            Y_hat, cashe = self.full_forward_propagation(X, params_values, nn_architecture)
             
             # calculating metrics and saving them in history
-            cost = get_cost_value(Y_hat, Y)
+            cost = self.get_cost_value(Y_hat, Y)
             cost_history.append(cost)
-            accuracy = get_accuracy_value(Y_hat, Y)
+            accuracy = self.get_accuracy_value(Y_hat, Y)
             accuracy_history.append(accuracy)
             
             # step backward - calculating gradient
-            grads_values = full_backward_propagation(Y_hat, Y, cashe, params_values, nn_architecture)
+            grads_values = self.full_backward_propagation(Y_hat, Y, cashe, params_values, nn_architecture)
             # updating model state
-            params_values = update(params_values, grads_values, nn_architecture, learning_rate)
-            
+            params_values = self.update(params_values, grads_values, nn_architecture, learning_rate)
+
             if(i % 50 == 0):
                 if(verbose):
-                    print("Iteration: {:05} - cost: {:.5f} - accuracy: {:.5f}".format(i, cost, accuracy))
+                    print("Iteration: {} - cost: {} - accuracy: {}".format(i, cost, accuracy))
                 if(callback is not None):
                     callback(i, params_values)
                 
