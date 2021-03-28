@@ -65,30 +65,49 @@ class NN:
 
     
     def full_forward_propagation(X, params_values, nn_architecture):
-    # creating a temporary memory to store the information needed for a backward step
-    memory = {}
-    # X vector is the activation for layer 0 
-    A_curr = X
-    
-    # iteration over network layers
-    for idx, layer in enumerate(nn_architecture):
-        # we number network layers from 1
-        layer_idx = idx + 1
-        # transfer the activation from the previous iteration
-        A_prev = A_curr
+        # creating a temporary memory to store the information needed for a backward step
+        memory = {}
+        # X vector is the activation for layer 0 
+        A_curr = X
         
-        # extraction of the activation function for the current layer
-        activ_function_curr = layer["activation"]
-        # extraction of W for the current layer
-        W_curr = params_values["W" + str(layer_idx)]
-        # extraction of b for the current layer
-        b_curr = params_values["b" + str(layer_idx)]
-        # calculation of activation for the current layer
-        A_curr, Z_curr = single_layer_forward_propagation(A_prev, W_curr, b_curr, activ_function_curr)
-        
-        # saving calculated values in the memory
-        memory["A" + str(idx)] = A_prev
-        memory["Z" + str(layer_idx)] = Z_curr
+        # iteration over network layers
+        for idx, layer in enumerate(nn_architecture):
+            # we number network layers from 1
+            layer_idx = idx + 1
+            # transfer the activation from the previous iteration
+            A_prev = A_curr
+            
+            # extraction of the activation function for the current layer
+            activ_function_curr = layer["activation"]
+            # extraction of W for the current layer
+            W_curr = params_values["W" + str(layer_idx)]
+            # extraction of b for the current layer
+            b_curr = params_values["b" + str(layer_idx)]
+            # calculation of activation for the current layer
+            A_curr, Z_curr = single_layer_forward_propagation(A_prev, W_curr, b_curr, activ_function_curr)
+            
+            # saving calculated values in the memory
+            memory["A" + str(idx)] = A_prev
+            memory["Z" + str(layer_idx)] = Z_curr
        
     # return of prediction vector and a dictionary containing intermediate values
     return A_curr, memory
+
+    def get_cost_value(Y_hat, Y):
+    # number of examples
+        m = Y_hat.shape[1]
+        # calculation of the cost according to the formula
+        cost = -1 / m * (np.dot(Y, np.log(Y_hat).T) + np.dot(1 - Y, np.log(1 - Y_hat).T))
+        return np.squeeze(cost)
+
+
+    def convert_prob_into_class(probs):
+        probs_ = np.copy(probs)
+        probs_[probs_ > 0.5] = 1
+        probs_[probs_ <= 0.5] = 0
+        return probs_
+
+    
+    def get_accuracy_value(Y_hat, Y):
+        Y_hat_ = convert_prob_into_class(Y_hat)
+        return (Y_hat_ == Y).all(axis=0).mean()
