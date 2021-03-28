@@ -30,7 +30,7 @@ class NN:
             params_values['b' + str(layer_idx)] = np.random.randn(
                 layer_output_size, 1) * 0.1
         
-    return params_values
+        return params_values
             
     def sigmoid(Z):
         return 1/(1+np.exp(-Z))
@@ -91,7 +91,7 @@ class NN:
             memory["Z" + str(layer_idx)] = Z_curr
        
     # return of prediction vector and a dictionary containing intermediate values
-    return A_curr, memory
+        return A_curr, memory
 
     def get_cost_value(Y_hat, Y):
     # number of examples
@@ -170,3 +170,43 @@ class NN:
             grads_values["db" + str(layer_idx_curr)] = db_curr
         
         return grads_values
+
+    def update(params_values, grads_values, nn_architecture, learning_rate):
+        # iteration over network layers
+        for layer_idx, layer in enumerate(nn_architecture, 1):
+            params_values["W" + str(layer_idx)] -= learning_rate * grads_values["dW" + str(layer_idx)]        
+            params_values["b" + str(layer_idx)] -= learning_rate * grads_values["db" + str(layer_idx)]
+
+        return params_values
+    
+    def train(X, Y, nn_architecture, epochs, learning_rate, verbose=False, callback=None):
+        # initiation of neural net parameters
+        params_values = init_layers(nn_architecture, 2)
+        # initiation of lists storing the history 
+        # of metrics calculated during the learning process 
+        cost_history = []
+        accuracy_history = []
+        
+        # performing calculations for subsequent iterations
+        for i in range(epochs):
+            # step forward
+            Y_hat, cashe = full_forward_propagation(X, params_values, nn_architecture)
+            
+            # calculating metrics and saving them in history
+            cost = get_cost_value(Y_hat, Y)
+            cost_history.append(cost)
+            accuracy = get_accuracy_value(Y_hat, Y)
+            accuracy_history.append(accuracy)
+            
+            # step backward - calculating gradient
+            grads_values = full_backward_propagation(Y_hat, Y, cashe, params_values, nn_architecture)
+            # updating model state
+            params_values = update(params_values, grads_values, nn_architecture, learning_rate)
+            
+            if(i % 50 == 0):
+                if(verbose):
+                    print("Iteration: {:05} - cost: {:.5f} - accuracy: {:.5f}".format(i, cost, accuracy))
+                if(callback is not None):
+                    callback(i, params_values)
+                
+        return params_values
