@@ -1,5 +1,5 @@
-# MNIST-From-Scratch
-#### Classifying the MNIST handwritten digit dataset using only numpy.
+<h1 align="center">MNIST-From-Scratch</h1>
+<h3 align="center">Classifying the MNIST handwritten digit dataset using only numpy.</h1>
 
 
 ### The MNIST Dataset
