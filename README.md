@@ -2,7 +2,7 @@
 <h3 align="center">Classifying the MNIST handwritten digit dataset using only numpy.</h1>
 
 
-### The MNIST Dataset
+## The MNIST Dataset
 
 ![image](https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MnistExamples.png/320px-MnistExamples.png)
 
